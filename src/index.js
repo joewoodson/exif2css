@@ -45,8 +45,8 @@ const transformOriginMap = {
 
 function expandTransforms(transforms) {
   const o = {}
-  let expanded = false
-  for (let prop in transforms) {
+  var expanded = false
+  for (var prop in transforms) {
     if (!expanded) expanded = true
     var ep = propMap[prop]
     o[ep] = transforms[prop]
@@ -56,16 +56,18 @@ function expandTransforms(transforms) {
 
 function getValue(prop, value) {
   if (prop === 'r' || prop === 'ry') {
-    return `${value}deg`
+    // return `${value}deg`
+    return value + 'deg'
   }
   if (prop === 't' || prop === 'ty') {
-    return `${value * 100}%`
+    // return `${value * 100}%`
+    return value * 100 + '%'
   }
 }
 
 function expandTransform(transforms) {
   const a = []
-  for (let prop in transforms) {
+  for (var prop in transforms) {
     const ep = propMap[prop]
     a.push(ep + '(' + getValue(prop, transforms[prop]) + ')')
   }
@@ -74,8 +76,8 @@ function expandTransform(transforms) {
 
 function expandTransformStrings(transforms) {
   const o = {}
-  let expanded = false
-  for (let prop in transforms) {
+  var expanded = false
+  for (var prop in transforms) {
     if (!expanded) expanded = true
     const ep = propMap[prop]
     o[ep] = ep + '(' + getValue(prop, transforms[prop]) + ')'
@@ -89,7 +91,7 @@ function expandTransformStrings(transforms) {
  * @returns {Exif2CssReturn} An object with `transform`, `transform-origin` (not shown in JSDoc because of hyphen), `transforms` and `transformStrings` properties.
  */
 function exif2css(orientation) {
-  const s = `${orientation}`
+  const s = orientation
   const transforms = transformsMap[s]
 
   const transform = expandTransform(transforms)
